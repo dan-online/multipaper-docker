@@ -6,7 +6,7 @@ on:
       - "*.*.*"
 
 jobs:
-  release:
+  release_clients:
     runs-on: ubuntu-latest
     steps:
       - name: Login to Docker Hub
@@ -25,6 +25,14 @@ jobs:
           context: "{{defaultContext}}:client"
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/multipaper-docker-client:latest
+  release_server:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
       - name: Build and push Main Docker Image
         id: docker_build
