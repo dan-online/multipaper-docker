@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Build and push Main Docker Image
-        run: cd client; docker push danonline/multipaper-docker-clients:latest
+        run: cd client; docker build . -t ${{ secrets.DOCKER_HUB_USERNAME }}/multipaper-docker-clients:latest; docker push danonline/multipaper-docker-clients:latest
 
       - name: Push README to Dockerhub
         uses: christian-korneck/update-container-description-action@v1
@@ -42,7 +42,7 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
       - name: Build and push Main Docker Image
-        run: cd master; docker push ${{ secrets.DOCKER_HUB_USERNAME }}/multipaper-docker:latest
+        run: cd master; docker build . -t ${{ secrets.DOCKER_HUB_USERNAME }}/multipaper-docker:latest; docker push ${{ secrets.DOCKER_HUB_USERNAME }}/multipaper-docker:latest
 
       - name: Push README to Dockerhub
         uses: christian-korneck/update-container-description-action@v1
