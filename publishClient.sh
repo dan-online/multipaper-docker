@@ -1,5 +1,3 @@
-cd client; 
-
-docker build . -t dan-online/multipaper-docker-clients:latest; 
+./build.sh;
 
 docker push dan-online/multipaper-docker-clients:latest;

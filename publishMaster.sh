@@ -1,5 +1,3 @@
-cd master; 
-
-docker build . -t dan-online/multipaper-docker:latest; 
+./build.sh;
 
 docker push dan-online/multipaper-docker:latest;
