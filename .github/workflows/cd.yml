@@ -20,7 +20,7 @@ jobs:
 
       - name: Build and push Clients Docker Image
         id: docker_build
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v2
         with:
           context: "{{defaultContext}}:client"
           push: true
@@ -36,7 +36,7 @@ jobs:
 
       - name: Build and push Main Docker Image
         id: docker_build
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v2
         with:
           context: "{{defaultContext}}:master"
           push: true
