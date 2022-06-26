@@ -22,7 +22,7 @@ jobs:
       - name: Build and push Main Docker Image
         run: cd client; docker push danonline/multipaper-docker-clients:latest
 
-     - name: Push README to Dockerhub
+      - name: Push README to Dockerhub
         uses: christian-korneck/update-container-description-action@v1
         env:
           DOCKER_USER: ${{ secrets.DOCKER_HUB_USERNAME }}
@@ -30,7 +30,7 @@ jobs:
         with:
           destination_container_repo: dan-online/multipaper-docker-clients
           provider: dockerhub
-          readme_file: 'README.md'
+          readme_file: "README.md"
 
   release_server:
     runs-on: ubuntu-latest
@@ -44,7 +44,7 @@ jobs:
       - name: Build and push Main Docker Image
         run: cd master; docker push ${{ secrets.DOCKER_HUB_USERNAME }}/multipaper-docker:latest
 
-     - name: Push README to Dockerhub
+      - name: Push README to Dockerhub
         uses: christian-korneck/update-container-description-action@v1
         env:
           DOCKER_USER: ${{ secrets.DOCKER_HUB_USERNAME }}
@@ -52,4 +52,4 @@ jobs:
         with:
           destination_container_repo: dan-online/multipaper-docker
           provider: dockerhub
-          readme_file: 'README.md'
+          readme_file: "README.md"
