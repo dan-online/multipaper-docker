@@ -1,3 +1,3 @@
 ./build.sh;
 
-docker push dan-online/multipaper-docker-clients:latest;
+docker push danonline/multipaper-docker-clients:latest;

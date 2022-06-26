@@ -28,7 +28,7 @@ jobs:
           DOCKER_USER: ${{ secrets.DOCKER_HUB_USERNAME }}
           DOCKER_PASS: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
         with:
-          destination_container_repo: dan-online/multipaper-docker-clients
+          destination_container_repo: danonline/multipaper-docker-clients
           provider: dockerhub
           readme_file: "README.md"
 
@@ -41,6 +41,9 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
+      - name: Checkout code
+        uses: actions/checkout@v2
+
       - name: Build and push Main Docker Image
         run: ./publishMaster.sh
 
@@ -50,6 +53,6 @@ jobs:
           DOCKER_USER: ${{ secrets.DOCKER_HUB_USERNAME }}
           DOCKER_PASS: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
         with:
-          destination_container_repo: dan-online/multipaper-docker
+          destination_container_repo: danonline/multipaper-docker
           provider: dockerhub
           readme_file: "README.md"
