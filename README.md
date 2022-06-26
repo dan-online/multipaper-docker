@@ -33,7 +33,7 @@ $ docker run -p 6000:6000 25565:25565 --name multipaper-server multipaper-docker
 Second, you need multipaper "clients", these are your processing "nodes" as they will be what the users will be distributed between through the proxy. This is under the docker tag of `multipaper-docker-clients`. The below example exposes ports `25577` through `25677`, this is because each instance has an incremented port starting from `25577`.
 
 ```bash
-$ docker run -p 25577:25677 --name multipaper-server multipaper-docker-clients
+$ docker run -p 25577:25677 --name multipaper-clients multipaper-docker-clients
 ```
 
 ### Environment Variables
@@ -58,7 +58,7 @@ Check out the example configuration [here](test/docker-compose.yml)
 ## Versioning
 
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the 
-[tags on this repository](https://github.com/your/repository/tags). 
+[tags on this repository](https://github.com/dan-online/multipaper-docker/tags). 
 
 ## Contributing
 
