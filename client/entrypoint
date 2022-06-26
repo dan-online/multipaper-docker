@@ -1,0 +1,48 @@
+#!/bin/bash
+
+cd /app
+
+URL=`node --no-warnings ./scripts/getVersionUrl.js $VERSION | jq -r '.app'`
+
+curl $URL > /data/multipaper.jar
+
+i=1
+
+while [ "$i" -le "$INSTANCES" ]; do
+    
+    echo "Starting instance $i"
+    dir=/data/server_$i
+    if [ ! -d $dir ]
+    then
+        echo "No instance found, generating..."
+        mkdir $dir
+    fi
+    cd $dir
+
+    echo "eula=true" > eula.txt
+    echo $OPS > ops.txt
+
+    if [ ! -f ./multipaper.yml ]
+    then
+        curl https://server.properties > server.properties
+        curl https://gist.githubusercontent.com/dan-online/5e89b9eff763482b793142413eacd004/raw/9ca8cd9bf0e0dcaa1b794c8648c09c18d5d20221/spigot.yml > spigot.yml
+        cp /data/multipaper.jar ./multipaper.jar
+        java -jar multipaper.jar > ../server_$i.log &
+        PID=$!
+        while [ ! -f ./multipaper.yml ]; do 
+            sleep 1;
+        done
+        kill $PID
+        echo 'java -jar multipaper.jar > ../server_$i.log &' > start.sh
+        chmod +x start.sh
+        yq -i ".multipaperMasterAddress = \"$MASTER\"" ./multipaper.yml
+        sed -i "s/25565/$((25577+$i))/" ./server.properties
+        sed -i "s/enable-command-block=false/enable-command-block=true/" ./server.properties
+        java -jar multipaper.jar >> ../server_$i.log &
+    else
+        java -jar multipaper.jar >> ../server_$i.log &
+    fi
+    i=$(($i + 1))
+done
+
+tail -f ../*.log

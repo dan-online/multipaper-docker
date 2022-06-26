@@ -1,0 +1,22 @@
+services:
+  master:
+    container_name: multipaper-master
+    image: multipaper-docker:dev
+    volumes:
+      - ./master:/data
+    ports:
+      - "25565:25565"
+      - "6000:6000"
+  clients:
+    depends_on:
+      - master
+    container_name: multipaper-clients
+    image: multipaper-docker-client:dev
+    environment: 
+      OPS: DanCodes
+      MASTER: "master:6000"
+      INSTANCES: 3
+    volumes:
+      - ./clients:/data
+    ports:
+      - "25577-25677:25577-25677"

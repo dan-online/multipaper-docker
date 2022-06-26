@@ -1,0 +1,10 @@
+#!/bin/bash
+cd app
+
+URL=`node --no-warnings ./scripts/getVersionUrl.js $VERSION | jq -r '.master'`
+
+curl $URL > /data/multipaper-master.jar
+
+cd /data
+
+java -jar multipaper-master.jar 6000 25565
