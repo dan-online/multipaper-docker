@@ -14,10 +14,10 @@ In order to run this container you'll need docker installed.
 
 ## Multipaper Server
 
-First you need a multipaper "master" or server instance running, this is under the docker tag of `multipaper-docker` and requires ports `6000` and `25565` to be exposed. The inbuilt proxy of multipaper is used so 25565 is your main connection port.
+First you need a multipaper "master" or server instance running, this is under the docker tag of `danonline/multipaper-docker` and requires ports `6000` and `25565` to be exposed. The inbuilt proxy of multipaper is used so 25565 is your main connection port.
 
 ```bash
-$ docker run -p 6000:6000 25565:25565 --name multipaper-server multipaper-docker
+$ docker run -p 6000:6000 25565:25565 --name multipaper-server danonline/multipaper-docker
 ```
 
 ### Environment Variables
@@ -30,10 +30,10 @@ $ docker run -p 6000:6000 25565:25565 --name multipaper-server multipaper-docker
 
 ## Multipaper Clients
 
-Second, you need multipaper "clients", these are your processing "nodes" as they will be what the users will be distributed between through the proxy. This is under the docker tag of `multipaper-docker-clients`. The below example exposes ports `25577` through `25677`, this is because each instance has an incremented port starting from `25577`.
+Second, you need multipaper "clients", these are your processing "nodes" as they will be what the users will be distributed between through the proxy. This is under the docker tag of `danonline/multipaper-docker-clients`. The below example exposes ports `25577` through `25677`, this is because each instance has an incremented port starting from `25577`.
 
 ```bash
-$ docker run -p 25577:25677 --name multipaper-clients multipaper-docker-clients
+$ docker run -p 25577:25677 --name multipaper-clients danonline/multipaper-docker-clients
 ```
 
 ### Environment Variables
@@ -58,7 +58,7 @@ Check out the example configuration [here](test/docker-compose.yml)
 ## Versioning
 
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the 
-[tags on this repository](https://github.com/dan-online/multipaper-docker/tags). 
+[tags on this repository](https://github.com/dan-online/danonline/multipaper-docker/tags). 
 
 ## Contributing
 

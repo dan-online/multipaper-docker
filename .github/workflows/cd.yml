@@ -19,13 +19,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Build and push Clients Docker Image
-        id: docker_build
-        uses: docker/build-push-action@master
+      - name: Build and push Main Docker Image
+        run: cd client; docker push danonline/multipaper-docker-clients:latest
+
+     - name: Push README to Dockerhub
+        uses: christian-korneck/update-container-description-action@v1
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_HUB_USERNAME }}
+          DOCKER_PASS: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
         with:
-          context: "{{defaultContext}}:client"
-          push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/multipaper-docker-client:latest
+          destination_container_repo: dan-online/multipaper-docker-clients
+          provider: dockerhub
+          readme_file: 'README.md'
+
   release_server:
     runs-on: ubuntu-latest
     steps:
@@ -36,12 +42,14 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
       - name: Build and push Main Docker Image
-        id: docker_build
-        uses: docker/build-push-action@master
-        with:
-          context: "{{defaultContext}}:master"
-          push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/multipaper-docker:latest
+        run: cd master; docker push ${{ secrets.DOCKER_HUB_USERNAME }}/multipaper-docker:latest
 
-      - name: Image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
+     - name: Push README to Dockerhub
+        uses: christian-korneck/update-container-description-action@v1
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_HUB_USERNAME }}
+          DOCKER_PASS: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+        with:
+          destination_container_repo: dan-online/multipaper-docker
+          provider: dockerhub
+          readme_file: 'README.md'
