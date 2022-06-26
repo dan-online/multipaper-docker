@@ -19,18 +19,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Build and push Main Docker Image
+      - name: Build and push Client Docker Image
         run: ./publishClient.sh
 
-      - name: Push README to Dockerhub
-        uses: christian-korneck/update-container-description-action@v1
-        env:
-          DOCKER_USER: ${{ secrets.DOCKER_HUB_USERNAME }}
-          DOCKER_PASS: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-        with:
-          destination_container_repo: danonline/multipaper-docker-clients
-          provider: dockerhub
-          readme_file: "README.md"
+      # - name: Push README to Dockerhub
+      #   uses: christian-korneck/update-container-description-action@v1
+      #   env:
+      #     DOCKER_USER: ${{ secrets.DOCKER_HUB_USERNAME }}
+      #     DOCKER_PASS: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      #   with:
+      #     destination_container_repo: danonline/multipaper-docker-clients
+      #     provider: dockerhub
+      #     readme_file: "README.md"
 
   release_server:
     runs-on: ubuntu-latest
@@ -47,12 +47,12 @@ jobs:
       - name: Build and push Main Docker Image
         run: ./publishMaster.sh
 
-      - name: Push README to Dockerhub
-        uses: christian-korneck/update-container-description-action@v1
-        env:
-          DOCKER_USER: ${{ secrets.DOCKER_HUB_USERNAME }}
-          DOCKER_PASS: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-        with:
-          destination_container_repo: danonline/multipaper-docker
-          provider: dockerhub
-          readme_file: "README.md"
+      # - name: Push README to Dockerhub
+      #   uses: christian-korneck/update-container-description-action@v1
+      #   env:
+      #     DOCKER_USER: ${{ secrets.DOCKER_HUB_USERNAME }}
+      #     DOCKER_PASS: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      #   with:
+      #     destination_container_repo: danonline/multipaper-docker
+      #     provider: dockerhub
+      #     readme_file: "README.md"
