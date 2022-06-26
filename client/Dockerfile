@@ -5,6 +5,7 @@ FROM openjdk:17-alpine
 ENV VERSION 1.18.2
 ENV MASTER localhost:6000
 ENV OPS ""
+ENV INSTANCES 1
 
 COPY --from=node /usr/lib /usr/lib
 COPY --from=node /usr/local/share /usr/local/share
@@ -13,8 +14,6 @@ COPY --from=node /usr/local/include /usr/local/include
 COPY --from=node /usr/local/bin /usr/local/bin
 
 VOLUME [ "/data" ]
-
-ENV INSTANCES 1
 
 RUN apk update && apk upgrade && apk add bash curl jq && apk update openjdk17
 

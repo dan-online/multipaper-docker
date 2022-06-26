@@ -15,7 +15,7 @@ services:
     environment: 
       OPS: DanCodes
       MASTER: "master:6000"
-      INSTANCES: 3
+      INSTANCES: 1
     volumes:
       - ./clients:/data
     ports:
