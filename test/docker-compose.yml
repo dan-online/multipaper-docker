@@ -1,18 +1,21 @@
 services:
   master:
     container_name: multipaper-master
-    image: danonline/multipaper-docker:dev
+    image: danonline/multipaper-docker
     volumes:
       - ./master:/data
     ports:
       - "25565:25565"
       - "6000:6000"
+    environment:
+      VERSION: "1.19.2"
   clients:
     depends_on:
       - master
     container_name: multipaper-clients
-    image: danonline/multipaper-docker-client:dev
+    image: danonline/multipaper-docker-clients
     environment: 
+      VERSION: "1.19.2"
       OPS: DanCodes
       MASTER: "master:6000"
       INSTANCES: 1
