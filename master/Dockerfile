@@ -2,7 +2,7 @@ FROM node:18-alpine AS node
 
 FROM openjdk:17-alpine
 
-ENV VERSION 1.18.2
+ENV VERSION 1.19.2
 
 COPY --from=node /usr/lib /usr/lib
 COPY --from=node /usr/local/share /usr/local/share

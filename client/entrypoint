@@ -2,7 +2,7 @@
 
 cd /app
 
-URL=`node --no-warnings ./scripts/getVersionUrl.js $VERSION | jq -r '.app'`
+URL=`node ./scripts/getMultipaperVersionUrl.js $VERSION | jq -r '.app'`
 
 curl $URL > /data/multipaper.jar
 
@@ -25,7 +25,7 @@ while [ "$i" -le "$INSTANCES" ]; do
     if [ ! -f ./multipaper.yml ]
     then
         curl https://server.properties > server.properties
-        curl https://gist.githubusercontent.com/dan-online/5e89b9eff763482b793142413eacd004/raw/9ca8cd9bf0e0dcaa1b794c8648c09c18d5d20221/spigot.yml > spigot.yml
+        cp /app/scripts/spigot.yml spigot.yml
         cp /data/multipaper.jar ./multipaper.jar
         java -jar multipaper.jar > ../server_$i.log &
         PID=$!
@@ -35,12 +35,28 @@ while [ "$i" -le "$INSTANCES" ]; do
         kill $PID
         echo 'java -jar multipaper.jar > ../server_$i.log &' > start.sh
         chmod +x start.sh
-        yq -i ".multipaperMasterAddress = \"$MASTER\"" ./multipaper.yml
+        # yq -i ".multipaperMasterAddress = \"$MASTER\"" ./multipaper.yml
+        /app/scripts/yq -i ".[\"master-connection\"][\"master-address\"] = \"$MASTER\"" ./multipaper.yml
         sed -i "s/25565/$((25577+$i))/" ./server.properties
-        sed -i "s/enable-command-block=false/enable-command-block=true/" ./server.properties
-        java -jar multipaper.jar >> ../server_$i.log &
+
+        # echo $PROXY;
+
+        # if [ -z "$PROXY" ]
+        # then
+        #     echo "PROXY not set, using default value"
+        # else
+        #     if [ "$PROXY" = "VELOCITY" ]
+        #     then
+        #         mkdir -p plugins/
+        #         PLUGIN_URL=`curl https://api.github.com/repos/bhopahk/VelocityLoadBalancer/releases/latest | jq -r '.assets[].browser_download_url'`
+        #         curl $PLUGIN_URL > plugins/VelocityLoadBalancer.jar
+        #     fi
+        # fi
+
+
+        screen -d -m java -jar multipaper.jar >> ../server_$i.log
     else
-        java -jar multipaper.jar >> ../server_$i.log &
+        screen -d -m java -jar multipaper.jar >> ../server_$i.log
     fi
     i=$(($i + 1))
 done

@@ -1,0 +1,37 @@
+services:
+  master:
+    container_name: multipaper-master
+    image: danonline/multipaper-docker:dev
+    volumes:
+      - ./master:/data
+    ports:
+      # - "25565:25565"
+      - "6000:6000"
+    environment:
+      DISABLE_PROXY: "true"
+      VERSION: "1.19.2"
+  proxy:
+    container_name: multipaper-proxy
+    image: itzg/bungeecord
+    ports:
+      - "25565:25577"
+    volumes:
+      - "./proxy:/server"
+    environment:
+      TYPE: "VELOCITY"
+    restart: always
+  clients:
+    depends_on:
+      - master
+    container_name: multipaper-clients
+    image: danonline/multipaper-docker-clients:dev
+    environment: 
+      VERSION: "1.19.2"
+      OPS: DanCodes
+      MASTER: "master:6000"
+      INSTANCES: 2
+    volumes:
+      - ./clients:/data
+    ports:
+      - "25577-25677:25577-25677"
+

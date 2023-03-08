@@ -1,5 +1,6 @@
 test/clients/
 test/master/
+test/proxy
 
 client/scripts
 master/scripts

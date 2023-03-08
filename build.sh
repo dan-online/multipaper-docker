@@ -1,5 +1,4 @@
-cp -r scripts/ client/
-cp -r scripts/ master/
+./copy.sh
 
 cd master
 docker build . -t danonline/multipaper-docker:latest
